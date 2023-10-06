@@ -1,7 +1,8 @@
-package com.botirov.myapplication.data
+package com.botirov.myapplication.data.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.botirov.myapplication.data.models.Priority
 
 @Entity(tableName = "todo_table")
 data class ToDoData (

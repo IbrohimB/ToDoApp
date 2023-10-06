@@ -1,4 +1,4 @@
-package com.botirov.myapplication.data
+package com.botirov.myapplication.data.models
 
 enum class Priority {
     HIGH,

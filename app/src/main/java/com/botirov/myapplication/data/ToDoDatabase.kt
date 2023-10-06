@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import com.botirov.myapplication.data.models.ToDoData
 
 @Database(entities = [ToDoData::class],version= 1, exportSchema = false)
 @TypeConverters(Converter::class)
