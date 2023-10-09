@@ -18,10 +18,12 @@ import com.botirov.myapplication.data.models.ToDoData
 import com.botirov.myapplication.data.viewmodel.ToDoViewModel
 import com.botirov.myapplication.databinding.FragmentAddBinding
 import com.botirov.myapplication.databinding.FragmentListBinding
+import com.botirov.myapplication.fragments.SharedViewModel
 
 class AddFragment : Fragment() {
 
     private val mToDoViewModel: ToDoViewModel by viewModels()
+    private val mSharedViewModel: SharedViewModel by viewModels()
 
     private var _binding: FragmentAddBinding? = null
     private val binding get() = _binding!!
@@ -55,13 +57,13 @@ class AddFragment : Fragment() {
         val mPriority = binding.prioritiesSpinner.selectedItem.toString()
         val mDescription = binding.descriptionEt.text.toString()
 
-        val validation = verifyDataFromUser(mTitle,mDescription)
+        val validation = mSharedViewModel.verifyDataFromUser(mTitle,mDescription)
         if(validation){
             // Insert Data to Database
             val newData = ToDoData(
                 0,
                 mTitle,
-                parsePiority(mPriority),
+                mSharedViewModel.parsePiority(mPriority),
                 mDescription
             )
             mToDoViewModel.insertData(newData)
@@ -73,22 +75,7 @@ class AddFragment : Fragment() {
         }
     }
 
-    private fun verifyDataFromUser(title:String, description:String):Boolean{ // this is to check if empty, before passing to the user
-        return if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description)){
-            false
-        } else !(title.isEmpty() || description.isEmpty())
 
-    }
-
-    private fun parsePiority(priority: String): Priority {
-        return when(priority){
-            "High Priority" -> {Priority.HIGH}
-            "Medium Priority" -> {Priority.MEDIUM}
-            "Low Priority" -> {Priority.LOW}
-            else -> Priority.LOW
-
-        }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
