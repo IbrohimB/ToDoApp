@@ -38,6 +38,8 @@ class AddFragment : Fragment() {
         val view = binding.root
         setHasOptionsMenu(true)
 
+        binding.prioritiesSpinner.onItemSelectedListener = mSharedViewModel.listener
+
         return view
     }
 
