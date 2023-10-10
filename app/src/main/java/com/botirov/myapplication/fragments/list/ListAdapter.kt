@@ -34,6 +34,7 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         holder.binding.titleTxt.text = dataList[position].title
         holder.binding.descriptionTxt.text = dataList[position].description
 
+        println("hop: color ${dataList[position].priority}")
 
         when(dataList[position].priority){
             Priority.HIGH -> holder.binding.priorityIndicator.setCardBackgroundColor(ContextCompat.getColor(
