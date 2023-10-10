@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.botirov.myapplication.R
 import com.botirov.myapplication.data.models.Priority
@@ -33,6 +34,10 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.binding.titleTxt.text = dataList[position].title
         holder.binding.descriptionTxt.text = dataList[position].description
+        holder.binding.rowBackground.setOnClickListener {
+            val action = ListFragmentDirections.actionListFragmentToUpdateFragment(dataList[position])
+            holder.itemView.findNavController().navigate(action)
+        }
 
         println("hop: color ${dataList[position].priority}")
 

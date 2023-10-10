@@ -2,6 +2,10 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.devtools.ksp'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+
 }
 
 android {
@@ -22,6 +26,16 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildscript {
+        repositories {
+            google()
+        }
+        dependencies {
+            def nav_version = "2.7.4"
+            classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
         }
     }
 
