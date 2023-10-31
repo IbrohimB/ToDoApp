@@ -33,41 +33,35 @@ class ListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        // Data binding
         _binding = FragmentListBinding.inflate(inflater, container, false)
-        val view = binding.root
+        binding.lifecycleOwner = this
+        binding.mSharedViewModel = mSharedViewModel
 
-        val recyclerView = binding.reyclerView
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireActivity())
 
+        //Setup RecyclerView
+        setupRecyclerView()
+
+        // Observe LiveData
         mToDoViewModel.getAllData.observe(viewLifecycleOwner, Observer {data ->
             mSharedViewModel.checkIfDatabaseEmpty(data)
             adapter.setData(data)
         })
 
-        mSharedViewModel.emptyDatabase.observe(viewLifecycleOwner, Observer {
-            showEmptyDatabaseViews(it)
-        })
 
-        binding.floatingActionButton.setOnClickListener {
-            findNavController().navigate(R.id.action_listFragment_to_addFragment)
-        }
 
 
         setHasOptionsMenu(true)
-
-        return view
+        return binding.root
     }
 
-    private fun showEmptyDatabaseViews(emptyDatabase: Boolean) {
-        if(emptyDatabase){
-            binding.noDataImageView.visibility = View.VISIBLE
-            binding.noDataTextView.visibility = View.VISIBLE
-        }else{
-            binding.noDataImageView.visibility = View.INVISIBLE
-            binding.noDataTextView.visibility = View.INVISIBLE
-        }
+    private fun setupRecyclerView() {
+        val recyclerView = binding.reyclerView
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(requireActivity())
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.list_fragment_menu,menu)
