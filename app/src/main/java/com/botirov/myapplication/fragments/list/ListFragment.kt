@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -66,7 +67,7 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun setupRecyclerView() {
         val recyclerView = binding.reyclerView
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireActivity())
+        recyclerView.layoutManager = GridLayoutManager(requireActivity(), 2)
         recyclerView.itemAnimator =SlideInUpAnimator().apply {
             addDuration = 300
         }
@@ -112,8 +113,10 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_delete_all){
-            confirmRemoval()
+        when (item.itemId){
+            R.id.menu_delete_all -> confirmRemoval()
+            R.id.menu_priority_high -> mToDoViewModel.sortByHighPriority.observe(this,Observer {adapter.setData(it) })
+            R.id.menu_priority_low -> mToDoViewModel.sortByLowPriority.observe(this,Observer {adapter.setData(it) })
         }
         return super.onOptionsItemSelected(item)
     }
