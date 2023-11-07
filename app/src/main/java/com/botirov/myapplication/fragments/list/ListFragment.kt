@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.botirov.myapplication.R
 import com.botirov.myapplication.data.models.ToDoData
 import com.botirov.myapplication.data.viewmodel.ToDoViewModel
@@ -67,7 +68,7 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun setupRecyclerView() {
         val recyclerView = binding.reyclerView
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = GridLayoutManager(requireActivity(), 2)
+        recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerView.itemAnimator =SlideInUpAnimator().apply {
             addDuration = 300
         }
